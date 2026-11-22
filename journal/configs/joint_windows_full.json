@@ -1,0 +1,72 @@
+[
+ {
+  "scenario": "milan_p025",
+  "tier": "broadband",
+  "fleet": [
+   78,
+   80,
+   82,
+   84,
+   96,
+   98,
+   100,
+   104
+  ]
+ },
+ {
+  "scenario": "milan_p075",
+  "tier": "video",
+  "fleet": [
+   58,
+   60,
+   64,
+   66
+  ]
+ },
+ {
+  "scenario": "milan_p100",
+  "tier": "video",
+  "fleet": [
+   147,
+   152,
+   157,
+   162,
+   235,
+   240,
+   245,
+   250,
+   255,
+   260,
+   265
+  ]
+ },
+ {
+  "scenario": "milan_p100",
+  "tier": "voice",
+  "fleet": [
+   16,
+   18,
+   20
+  ]
+ },
+ {
+  "scenario": "shelter_clustered",
+  "tier": "video",
+  "fleet": [
+   40,
+   41,
+   43,
+   45,
+   48,
+   50,
+   52
+  ]
+ },
+ {
+  "scenario": "urban_broad",
+  "tier": "voice",
+  "fleet": [
+   15
+  ]
+ }
+]

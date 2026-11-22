@@ -1,0 +1,69 @@
+# Literature-grounded system model for the journal extension.
+# Every value is cited in docs/parameters.md (row ids in brackets).
+# configs/default.yaml is the ICC model, kept for comparison.
+
+antenna:
+  # 2x2 lambda/2 panel of TR 38.901 Table 7.3-1 elements, fitted to the
+  # parametric pattern: directivity and HPBW computed numerically, minus the
+  # 1.8 dB that maps one element's directivity onto its stated 8 dBi [A1, A2].
+  dl_g_max_dbi: 11.0
+  dl_beamwidth_deg: 44.5
+  dl_sla_db: 30.0
+  bh_g_max_dbi: 16.0          # backhaul: 4x4 panel of the same elements [A2]
+  bh_beamwidth_deg: 24.8
+  bh_sla_db: 30.0
+
+channel:
+  environment: urban          # Al-Hourani et al. 2014 [C1]; others as sensitivity
+  carrier_freq_hz: 2.0e+9     # TR 36.814 [N2]
+
+network:
+  n_drones: 15
+  altitude_m: 120.0           # K-means baseline flies at the legal ceiling [R1, R2]
+  p_tx_dl_dbm: 30.0           # TR 36.814 hotzone, 30 dBm per 10 MHz [N2]
+  p_tx_bh_dbm: 30.0           # TR 36.814 relay node [B7]
+  bandwidth_hz: 10.0e+6       # [N2]
+  noise_psd_dbm_hz: -174.0
+  noise_figure_db: 9.0        # UE receiver, TR 36.777 Table A.1-1 [N1]
+  sinr_threshold_db: 3.0      # ICC coverage criterion, kept for comparability
+  min_separation_m: 100.0
+  dl_tilt_deg: 0.0
+  bh_tilt_deg: 90.0
+  z_min_m: 50.0
+  z_max_m: 120.0              # 14 CFR 107.51(b); EU 2019/947 Art. 4(1)(e) [R1, R2]
+  z_step_m: 10.0
+
+scenario:
+  area_size_m: 2000.0
+  n_clusters: 5
+  users_per_cluster_mean: 40
+  users_per_cluster_std: 10
+  cluster_spread_m: 100.0
+
+simulation:
+  n_trials: 100
+  seed: 42
+  placement_strategy: kmeans
+
+capacity:
+  se_alpha: 0.6               # TR 36.942 Annex A.1, DL [N3]
+  se_sinr_min_db: -10.0
+  se_max_bps_hz: 4.4
+  max_users_per_cell: null    # sensitivity only [D7]
+
+demand:
+  population: null            # set per scenario (Sphere, ISTAT, TS 22.261 densities) [D1, D5, D10]
+  device_share: 0.82          # ITU Facts and Figures 2025, aged 10+, world [D12]
+  activity_factor: 0.2        # TS 22.261 Table 7.1-1, urban macro [D5]
+  r_min_bps: 38000.0          # VoLTE AMR-WB 12.65 kb/s over IPv6, TS 26.114 [D3]
+
+backhaul:
+  link_model: fixed           # dedicated 60 GHz drone-to-drone links (802.11ad mesh) [B3]
+  fixed_link_bps: 8.0e+8      # SkyHaul measured aggregate 200-800 Mb/s: the upper end [B3]
+  gateway_bps: 1.0e+8         # one satellite terminal, Starlink US median DL [B6]
+  link_range_m: 400.0         # SkyHaul measured UAV links at 40-400 m [B3]
+  interfaces: 3               # SkyHaul relay and ground-station UAVs carry up to three 60 GHz radios [B3]
+  topology: mst_corner        # the ICC tree; mst_central and balanced are compared beside it
+  # used by the shared-channel sensitivity (link_model: sinr) only:
+  bandwidth_hz: 20.0e+6       # LTE backhaul for UAVs, Galkin et al. ICC 2018 [B2]
+  noise_figure_db: 5.0        # relay node receiver, TR 36.814 Table A.2.1.1.4-3 [B7]

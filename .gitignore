@@ -1,0 +1,21 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+.env
+
+# Experiment outputs: reproducible from the scripts
+results/
+logs/
+outcmaes/
+noint_results/
+*.csv
+
+# Raw Telecom Italia dataset (Harvard Dataverse, doi:10.7910/DVN/EGZHFV)
+dataverse_files*/
+
+# Third-party data downloaded by the scripts (ISTAT census sections)
+external/
